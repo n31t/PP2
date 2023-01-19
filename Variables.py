@@ -61,3 +61,41 @@ def myfunc():
 
 
 myfunc()
+
+x = "awesome"
+
+
+def myfunc():
+    x = "fantastic"
+    print("Python is " + x)
+
+
+myfunc()
+
+print("Python is " + x)
+
+
+def f():
+    global x
+    x = "u i u aa"
+
+
+f()
+print("Python is " + x)
+
+# EXERCISES
+carname = "Volvo"
+x = 5
+y = 10
+print(x + y)
+
+
+z = x + y
+print(z)
+myfirst_name = "John"
+y = x = z = "Orange"
+
+
+def myfunc():
+    global x
+    x = "fantastic"
