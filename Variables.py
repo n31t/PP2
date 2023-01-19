@@ -23,3 +23,41 @@ _my_var = "John"
 myVar = "John"
 MYVAR = "John"
 myvar2 = "John"
+
+x, y, z = "Orange", "Banana", "Cherry"
+print(x)
+print(y)
+print(z)
+x = y = z = "Orange"
+print(x)
+print(y)
+print(z)
+
+fruits = ['banana', "apple", "M879MOTOR", "strawberry"]
+x, y, z, w = fruits  # must be equal
+print(x)
+print(y)
+print(z)
+
+
+x = "Python"
+y = "is"
+z = "awesome"
+print(x, y, z)
+x = "Python "
+y = "is "
+z = "awesome"
+print(x + y + z)
+
+x = 5
+y = "John"
+print(x, y)
+
+x = "awesome"
+
+
+def myfunc():
+    print("Is Python", x, '?')
+
+
+myfunc()
