@@ -60,3 +60,10 @@ print(type(z), z)
 
 # OT 1 - 9 vkluchitelno
 print(random.randrange(1, 10))
+
+x = 5
+x = float(x)
+x = 5.5
+x = int(x)
+x = 5
+x = complex(x)
