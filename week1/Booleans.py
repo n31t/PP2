@@ -58,7 +58,7 @@ else:
 
 x = 200
 print(isinstance(x, int))
-"""EXERCICES"""
+"""EXERCIsES"""
 # print(10 > 9) returns TRUE
 print(10 == 9)
 print(10 < 9)
