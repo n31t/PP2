@@ -7,3 +7,9 @@ That's my excuse
 
 Have a nice day!
 '''
+
+
+def time_left(hrs, min, sec):
+    hrs = 0
+    min = 0
+    sec = 0.2
