@@ -1,6 +1,6 @@
 import json
 
-with open('sample-data.json') as file:
+with open('/Users/adilovamir/Desktop/PP2/week4/LAB4/jsonn/JSON.json') as file:
     json_data = json.load(file)
     print("""
 Interface Status
@@ -10,8 +10,8 @@ DN                                                 Description           Speed  
     """)
     imdata = json_data["imdata"]
     for item in imdata:
-        nest_item = item["l1PhysIf"]
-        attribs = nest_item["attributes"]
+        phys = item["l1PhysIf"]
+        attribs = phys["attributes"]
         dn = attribs["dn"]
         speed = attribs["speed"]
         mtu = attribs["mtu"]
