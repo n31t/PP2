@@ -3,8 +3,8 @@ txt = '''
 a
 aaa
 llllaob
+ao0bbbb
 red_mad_robot
 '''
-# task 1
-x = re.findall('.*a+b?.*', txt)
+x = re.findall(r".*a+.*b+.*b+.*b?.*", txt)
 print(x)
