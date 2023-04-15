@@ -22,6 +22,7 @@ REGULAR_SPEED = 4
 POTION_SPAWN = False
 POTION_DURATION_R = False
 POTION_DURATION_B = False
+LUCKY_SPAWN = False
 DEAD_B = False
 DEAD_R = False
 
@@ -49,19 +50,24 @@ player2_image = pygame.transform.scale(
     player2_image, (PLAYER_SIZE, PLAYER_SIZE))
 coin = pygame.Rect(WIDTH // 2 - COIN_SIZE // 2, HEIGHT //
                    2 - COIN_SIZE // 2, COIN_SIZE, COIN_SIZE)
-coin_image = pygame.image.load("coin.gif")
+coin_image = pygame.image.load("coin2.png")
 coin_image = pygame.transform.scale(
     coin_image, (COIN_SIZE, COIN_SIZE))
 bomb = pygame.Rect(random.randint(100, WIDTH - 100),
                    random.randint(100, HEIGHT - 100), BOMB_SIZE, BOMB_SIZE)
-bomb_image = pygame.image.load("bomb.png")
+bomb_image = pygame.image.load("bomb2.png")
 bomb_image = pygame.transform.scale(
     bomb_image, (BOMB_SIZE, BOMB_SIZE))
 potion = pygame.Rect(random.randint(100, WIDTH - 100),
-                     random.randint(100, HEIGHT - 100), POTION_SIZE, POTION_SIZE)
-potion_image = pygame.image.load("fast2.gif")
+                     random.randint(100, HEIGHT - 100), POTION_SIZE, POTION_SIZE+10)
+potion_image = pygame.image.load("fast2.png")
 potion_image = pygame.transform.scale(
-    potion_image, (POTION_SIZE, POTION_SIZE))
+    potion_image, (POTION_SIZE, POTION_SIZE+10))
+lucky = pygame.Rect(WIDTH // 2 - 15,
+                    HEIGHT // 2, LUCKY_SIZE, LUCKY_SIZE)
+lucky_image = pygame.image.load("lucky.png")
+lucky_image = pygame.transform.scale(
+    lucky_image, (LUCKY_SIZE, LUCKY_SIZE))
 
 
 # Background
@@ -81,6 +87,7 @@ timer_duration = 0
 timer_duration2 = 0
 timer_potion_duration = 0
 timer_potion_spawn = 0
+timer_lucky_spawn = 0
 game_timer = pygame.time.get_ticks() + GAME_DURATION * 1000
 
 # Game loop
@@ -90,7 +97,7 @@ while True:
             pygame.quit()
 
     keys = pygame.key.get_pressed()
-    # Music
+    '''Music'''
     if (timer_current == 0):
         MAIN_THEME = pygame.mixer.Sound('music.mp3')
         MAIN_THEME.set_volume(0.3)
@@ -153,6 +160,11 @@ while True:
     if (timer_duration - timer_current) <= 0 and DEAD_R == True:
         SPEED_R = 4
         DEAD_R = False
+    # Mystery box recovery
+    if (timer_lucky_spawn - timer_current) <= 0 and LUCKY_SPAWN == True:
+        LUCKY_SPAWN = False
+        lucky.x = WIDTH // 2 - 15
+        lucky.y = HEIGHT // 2
     # Potion recovery
     if (timer_potion_spawn - timer_current) <= 0 and POTION_SPAWN == True:
         POTION_SPAWN = False
@@ -162,10 +174,10 @@ while True:
     # Potion duration
     if (timer_potion_duration - timer_current) <= 0 and POTION_DURATION_R == True:
         SPEED_R = 4
-        POTION_DURATION_R == False
+        POTION_DURATION_R = False
     if (timer_potion_duration - timer_current) <= 0 and POTION_DURATION_B == True:
         SPEED_B = 4
-        POTION_DURATION_B == False
+        POTION_DURATION_B = False
 
     # For both
     if player_red.colliderect(player_blue) and (carrying_coin_red == True or carrying_bomb_red == True) and (carrying_coin_blue == True or carrying_bomb_blue == True):
@@ -215,8 +227,8 @@ while True:
     if player_red.colliderect(potion):
         #     potion.x = random.randint(100, WIDTH - 100)
         #     potion.y = random.randint(100, HEIGHT - 100)
-        potion.x = 800
-        potion.y = 800
+        potion.x = 9900
+        potion.y = 9900
         SPEED_R = 7
         POTION_SPAWN = True
         POTION_DURATION_R = True
@@ -232,13 +244,61 @@ while True:
         POTION_DURATION_B = True
         timer_potion_duration = timer_current + 3000
         timer_potion_spawn = timer_current + 7000
-
+    '''Features (Mystery box)'''
+    if player_red.colliderect(lucky) or player_blue.colliderect(lucky):
+        lucky_number = random.randint(1, 7)
+        if (lucky_number == 1):
+            player1_image = pygame.transform.rotate(player1_image, 180)
+            player2_image = pygame.transform.rotate(player2_image, 180)
+        elif (lucky_number == 2):
+            red_team_score += 3
+        elif (lucky_number == 3):
+            blue_team_score += 3
+        elif (lucky_number == 4):
+            player_red.x = WIDTH - 70 - PLAYER_SIZE
+            player_red.y = HEIGHT // 2
+            player_blue.x = 70
+            player_blue.y = HEIGHT // 2
+        elif (lucky_number == 5):
+            PLAYER_SIZE += 20
+            player_red = pygame.Rect(70, HEIGHT // 2, PLAYER_SIZE, PLAYER_SIZE)
+            player1_image = pygame.image.load("player_red.png")
+            player1_image = pygame.transform.scale(
+                player1_image, (PLAYER_SIZE, PLAYER_SIZE))
+            player_blue = pygame.Rect(WIDTH - 70 - PLAYER_SIZE,
+                                      HEIGHT // 2, PLAYER_SIZE, PLAYER_SIZE)
+            player2_image = pygame.image.load("player_blue.png")
+            player2_image = pygame.transform.scale(
+                player2_image, (PLAYER_SIZE, PLAYER_SIZE))
+        elif (lucky_number == 6):
+            PLAYER_SIZE -= 10
+            player_red = pygame.Rect(70, HEIGHT // 2, PLAYER_SIZE, PLAYER_SIZE)
+            player1_image = pygame.image.load("player_red.png")
+            player1_image = pygame.transform.scale(
+                player1_image, (PLAYER_SIZE, PLAYER_SIZE))
+            player_blue = pygame.Rect(WIDTH - 70 - PLAYER_SIZE,
+                                      HEIGHT // 2, PLAYER_SIZE, PLAYER_SIZE)
+            player2_image = pygame.image.load("player_blue.png")
+            player2_image = pygame.transform.scale(
+                player2_image, (PLAYER_SIZE, PLAYER_SIZE))
+        elif (lucky_number == 7):
+            blue_team_score += 777
+            red_team_score += 777
+        lucky.x = 9900
+        lucky.y = 9900
+        LUCKY_SPAWN = True
+        timer_lucky_spawn = timer_current + 20000
     # Check for reaching the nests
     red_nest = pygame.Rect(0, HEIGHT // 2 - NEST_SIZE //
                            2, NEST_SIZE, NEST_SIZE)
+    red_nest_image = pygame.image.load("red_nest.png")
+    red_nest_image = pygame.transform.scale(
+        red_nest_image, (NEST_SIZE, NEST_SIZE))
     blue_nest = pygame.Rect(WIDTH - NEST_SIZE, HEIGHT //
                             2 - NEST_SIZE // 2, NEST_SIZE, NEST_SIZE)
-
+    blue_nest_image = pygame.image.load("blue_nest.png")
+    blue_nest_image = pygame.transform.scale(
+        blue_nest_image, (NEST_SIZE, NEST_SIZE))
     if player_red.colliderect(red_nest):
         if carrying_coin_red:
             carrying_coin_red = False
@@ -248,6 +308,9 @@ while True:
             red_team_score += 1
             # Add score for red team
             # Update the score for red team
+            '''FAKE COIN'''
+            if random.randint(1, 10) > 8:
+                red_team_score -= 1
 
         if carrying_bomb_red:
             carrying_bomb_red = False
@@ -255,6 +318,7 @@ while True:
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             red_team_score -= 2
+
             # Subtract score for red team
             # Update the score for red team
     ''''Imposter'''
@@ -270,7 +334,9 @@ while True:
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             blue_team_score -= 2
-
+            '''FAKE BOMBINO'''
+            if random.randint(1, 10) > 8:
+                red_team_score += 3
     ''''Imposter'''
     if player_blue.colliderect(red_nest):
         if carrying_coin_blue:
@@ -284,6 +350,9 @@ while True:
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             red_team_score -= 2
+            '''FAKE BOMBINO'''
+            if random.randint(1, 10) > 8:
+                red_team_score += 3
 
     if player_blue.colliderect(blue_nest):
         if carrying_coin_blue:
@@ -294,7 +363,9 @@ while True:
             blue_team_score += 1
             # Add score for blue team
             # Update the score for blue team
-
+            '''FAKE COIN'''
+            if random.randint(1, 10) > 8:
+                red_team_score -= 1
         if carrying_bomb_blue:
             carrying_bomb_blue = False
             # Deposit the bomb in blue team's box
@@ -318,18 +389,19 @@ while True:
     '''pygame.draw.rect(win, BLUE, player_blue)'''
     win.blit(player2_image, player_blue)
     win.blit(coin_image, coin)
-    pygame.draw.rect(win, RED, red_nest)
-    pygame.draw.rect(win, BLUE, blue_nest)
+    win.blit(red_nest_image, red_nest)
+    win.blit(blue_nest_image, blue_nest)
     win.blit(bomb_image, bomb)
     win.blit(potion_image, potion)
+    win.blit(lucky_image, lucky)
     pygame.display.update()
 
     # Check for game over
     if pygame.time.get_ticks() >= game_timer:
         if red_team_score > blue_team_score:
-            print("Red wins!")
+            print("Kelgenbaev wins!")
         elif blue_team_score > red_team_score:
-            print("Blue wins!")
+            print("Trump wins!")
         else:
             print("It's a tie!")
         pygame.quit()
