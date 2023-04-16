@@ -186,8 +186,8 @@ while True:
         timer_duration2 = timer_current + 4000
         SPEED_B = 0
         DEAD_B = True
-        sound = pygame.mixer.Sound('crash.mp3')
-        sound.set_volume(0.04)
+        sound = pygame.mixer.Sound('death.mp3')
+        sound.set_volume(0.3)
         sound.play()
         player_blue.x = WIDTH - 70 - PLAYER_SIZE
         player_blue.y = HEIGHT // 2
@@ -205,8 +205,8 @@ while True:
         timer_duration2 = timer_current + 4000
         SPEED_B = 0
         DEAD_B = True
-        sound = pygame.mixer.Sound('crash.mp3')
-        sound.set_volume(0.04)
+        sound = pygame.mixer.Sound('death.mp3')
+        sound.set_volume(0.3)
         sound.play()
         player_blue.x = WIDTH - 70 - PLAYER_SIZE
         player_blue.y = HEIGHT // 2
@@ -217,8 +217,8 @@ while True:
         timer_duration = timer_current + 4000
         SPEED_R = 0
         DEAD_R = True
-        sound = pygame.mixer.Sound('crash.mp3')
-        sound.set_volume(0.04)
+        sound = pygame.mixer.Sound('death.mp3')
+        sound.set_volume(0.3)
         sound.play()
         player_red.x = 70
         player_red.y = HEIGHT // 2
@@ -234,6 +234,9 @@ while True:
         POTION_DURATION_R = True
         timer_potion_duration = timer_current + 3000
         timer_potion_spawn = timer_current + 7000
+        soundp = pygame.mixer.Sound('fast.mp3')
+        soundp.set_volume(0.2)
+        soundp.play()
     if player_blue.colliderect(potion):
         #     potion.x = random.randint(100, WIDTH - 100)
         #     potion.y = random.randint(100, HEIGHT - 100)
@@ -244,9 +247,15 @@ while True:
         POTION_DURATION_B = True
         timer_potion_duration = timer_current + 3000
         timer_potion_spawn = timer_current + 7000
+        soundp = pygame.mixer.Sound('fast.mp3')
+        soundp.set_volume(0.2)
+        soundp.play()
     '''Features (Mystery box)'''
     if player_red.colliderect(lucky) or player_blue.colliderect(lucky):
         lucky_number = random.randint(1, 7)
+        sound2 = pygame.mixer.Sound('lucky.mp3')
+        sound2.set_volume(0.4)
+        sound2.play()
         if (lucky_number == 1):
             player1_image = pygame.transform.rotate(player1_image, 180)
             player2_image = pygame.transform.rotate(player2_image, 180)
@@ -306,6 +315,9 @@ while True:
             coin.x = random.randint(100, WIDTH - 100)
             coin.y = random.randint(100, HEIGHT - 100)
             red_team_score += 1
+            soundc = pygame.mixer.Sound('coin.mp3')
+            soundc.set_volume(0.55)
+            soundc.play()
             # Add score for red team
             # Update the score for red team
             '''FAKE COIN'''
@@ -318,6 +330,9 @@ while True:
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             red_team_score -= 2
+            soundb = pygame.mixer.Sound('bomb.mp3')
+            soundb.set_volume(0.4)
+            soundb.play()
 
             # Subtract score for red team
             # Update the score for red team
@@ -328,12 +343,17 @@ while True:
             coin.x = random.randint(100, WIDTH - 100)
             coin.y = random.randint(100, HEIGHT - 100)
             blue_team_score += 1
-
+            soundc = pygame.mixer.Sound('coin.mp3')
+            soundc.set_volume(0.55)
+            soundc.play()
         if carrying_bomb_red:
             carrying_bomb_red = False
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             blue_team_score -= 2
+            soundb = pygame.mixer.Sound('bomb.mp3')
+            soundb.set_volume(0.4)
+            soundb.play()
             '''FAKE BOMBINO'''
             if random.randint(1, 10) > 8:
                 red_team_score += 3
@@ -344,12 +364,17 @@ while True:
             coin.x = random.randint(100, WIDTH - 100)
             coin.y = random.randint(100, HEIGHT - 100)
             red_team_score += 1
-
+            soundc = pygame.mixer.Sound('coin.mp3')
+            soundc.set_volume(0.55)
+            soundc.play()
         if carrying_bomb_blue:
             carrying_bomb_blue = False
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             red_team_score -= 2
+            soundb = pygame.mixer.Sound('bomb.mp3')
+            soundb.set_volume(0.4)
+            soundb.play()
             '''FAKE BOMBINO'''
             if random.randint(1, 10) > 8:
                 red_team_score += 3
@@ -361,6 +386,9 @@ while True:
             coin.x = random.randint(100, WIDTH - 100)
             coin.y = random.randint(100, HEIGHT - 100)
             blue_team_score += 1
+            soundc = pygame.mixer.Sound('coin.mp3')
+            soundc.set_volume(0.55)
+            soundc.play()
             # Add score for blue team
             # Update the score for blue team
             '''FAKE COIN'''
@@ -372,6 +400,9 @@ while True:
             bomb.x = random.randint(100, WIDTH - 100)
             bomb.y = random.randint(100, HEIGHT - 100)
             blue_team_score -= 2
+            soundb = pygame.mixer.Sound('bomb.mp3')
+            soundb.set_volume(0.4)
+            soundb.play()
             # Subtract score for blue team
             # Update the score for blue team
     # Draw the game objects
